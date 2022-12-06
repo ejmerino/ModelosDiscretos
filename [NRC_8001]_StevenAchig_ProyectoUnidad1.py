@@ -1,11 +1,11 @@
 """
 Batalla naval es un juego de estrategia, precision y analisas para saber en que lugar de la matriz esta el barco enemigo y poder atacarlo para ganar
 
-Autores:
+Autor:
 Achig Toapanta Steven Jossue
 
 Verisión:
-VER.1.2
+VER.1.3
 """
 
 #importamos la libreria randmos para numeros randomicos
@@ -31,10 +31,7 @@ DISPARO_ACERTADO = "*"
 #numero de oportunidades para disparar
 DISPAROS_INICIALES = 10
 #Canrtidad de barcos a usar para los dos jugadores
-CANTIDAD_BARCOS_INICIALES = 8
-#Variables de los jugadores 1 y 2
-JUGADOR_1 = "J1"
-JUGADOR_2 = "J2"
+CANTIDAD_BARCOS_INICIALES = 8   
 
 """
     Es una funcion para generar la matriz inicial donde se alojaran los barcos en diferentes posiciones
@@ -58,13 +55,21 @@ def obtener_matriz_inicial():
             matriz[y].append(MAR)
             #retornamos la matriz
     return matriz
-
-
+"""
+    Nos funciona como un contadora para cambiar o aumentar la posicion en la que nos encontremos con una letra A, B, C, D, E. Retorna una letra despues de la que se ingreso es decir si ingresa la A entonces retornara B
+    Parametros:
+    ------------
+        La letra que hayamos mandado.
+    
+    Retorna:
+    ------------
+        retorna una letra despues de la que se ingreso
+"""
 def incrementar_letra(letra):
     return chr(ord(letra)+1)
 
 """
-    Imprimir un renglón dependiendo de las columnas
+    Imprimir un renglón dependiendo de las columnas para una mejor vista de la matriz
     Parametros:
     ------------
         No tiene parametros de entrada
@@ -80,7 +85,7 @@ def imprimir_separador_horizontal():
     print("+")
 
 """
-    Imprimir el separador horizontal para las celdas
+    Imprimir el separador horizontal para las celdas para una mejor vista de la matriz
     Parametros:
     ------------
         No tiene parametros de entrada
@@ -96,7 +101,7 @@ def imprimir_fila_de_numeros():
     print("|")
 
 """
-    Indica si una coordenada de la matriz está vacía
+    Indica si una coordenada de la matriz está vacía o no
     Parametros:
     ------------
         Cordenada x
@@ -105,7 +110,7 @@ def imprimir_fila_de_numeros():
     
     Retorna:
     ------------
-        Retorna MAR
+        Retorna MAR si esta vacia o no.
 """
 def es_mar(x, y, matriz):
     #retorna si la coordenada esta vacia
@@ -137,15 +142,13 @@ def coordenada_en_rango(x, y):
     ------------
         Retorna la matriz
 """
-def colocar_e_imprimir_barcos(matriz, cantidad_barcos, jugador):
+def colocar_e_imprimir_barcos(matriz, cantidad_barcos):
     # Dividimos y redondeamos a entero hacia abajo (ya que no podemos colocar una parte no entera de un barco)
     barcos_una_celda = cantidad_barcos//2
     barcos_dos_celdas_verticales = cantidad_barcos//4
     barcos_dos_celdas_horizontales = cantidad_barcos//4
-    if jugador == JUGADOR_1:
-        print("Imprimiendo barcos del jugador 1 ")
-    else:
-        print("Imprimiendo barcos del jugador 2 ")
+    print("Imprimiendo barcos ")
+    #imprimimos que barcos son los que se ingresaran
     print(f"Barcos de una celda: {barcos_una_celda}\nBarcos verticales de dos celdas: {barcos_dos_celdas_verticales}\nBarcos horizontales de dos celdas: {barcos_dos_celdas_horizontales}\nTotal: {barcos_una_celda+barcos_dos_celdas_verticales+barcos_dos_celdas_horizontales}")
     # Primero colocamos los de dos celdas para que se acomoden bien
     matriz = colocar_barcos_de_dos_celdas_horizontal(barcos_dos_celdas_horizontales, DESTRUCTOR, matriz)
@@ -278,34 +281,16 @@ def colocar_barcos_de_dos_celdas_vertical(cantidad, tipo_barco, matriz):
     return matriz
 
 """
-    ES una funcion que nos imprime cuantos disparos restantes le queda a cada jugaor
-    Parametros:
-    ------------
-        disparos restantes
-        jugador
-    
-    Retorna:
-    ------------
-        No retorna
-"""
-def imprimir_disparos_restantes(disparos_restantes, jugador):
-    print(f"Disparos restantes de {jugador}: {disparos_restantes}")
-
-"""
     ES una funcion que nos imprime la celda de cada jugador para visibilizar mejor
     Parametros:
     ------------
-        matriz
+        matriz a imprimir
         si deberia o no mostrar los barcos
-        jugador
-    
     Retorna:
     ------------
         No retorna
 """
-def imprimir_matriz(matriz, deberia_mostrar_barcos, jugador):
-    #imprimimos de que jugador es el mar
-    print(f"Este es el mar del jugador {jugador}: ")
+def imprimir_matriz(matriz, deberia_mostrar_barcos):
     #variable para imprimir el tablero
     letra = "A"
     #para un y en el rango del numero de filas
@@ -327,7 +312,7 @@ def imprimir_matriz(matriz, deberia_mostrar_barcos, jugador):
     imprimir_separador_horizontal()
 
 """
-    ES una funcion que nos pide que ingresen las coordenadas
+    ES una funcion que nos pide que ingresen las coordenadas, ademas que valida si las coordenadas ingresadas estan dentro del rango de opciones 
     Parametros:
     ------------
     jugador
@@ -336,8 +321,8 @@ def imprimir_matriz(matriz, deberia_mostrar_barcos, jugador):
         la coordenada en x
         la coordenada en y
 """
-def solicitar_coordenadas(jugador):
-    print(f"Solicitando coordenadas de disparo al jugador {jugador}")
+def solicitar_coordenadas():
+    print(f"Solicitando coordenadas de disparo al jugador")
     # Ciclo infinito. Se rompe cuando ingresan una fila correcta
     y = None
     x = None
@@ -354,8 +339,10 @@ def solicitar_coordenadas(jugador):
         y = ord(letra_fila) - 65
         # Verificar si es válida. En caso de que sí, rompemos el ciclo
         if coordenada_en_rango(0, y):
+            #se rompe ciclo 
             break
         else:
+            #inprime fila invalida
             print("Fila inválida")
     # Hacemos lo mismo pero para la columna
     while True:
@@ -365,14 +352,16 @@ def solicitar_coordenadas(jugador):
                 x = x-1  # Queremos el índice, así que restamos un 1 siempre
                 break
             else:
+                #imprime columna no valida
                 print("Columna inválida")
         except:
+            #imprime numero ingresado no valido
             print("Ingresa un número válido")
-
+    #retorna las variables x y y
     return x, y
 
 """
-    ES una funcion que nos permite disparar o si el disaparo es acertado o fallido 
+    ES una funcion que nos permite disparar o si el disaparo es acertado o fallido comprobando si la celda escogida esta o no vacia.
     Parametros:
     ------------
     x
@@ -383,30 +372,22 @@ def solicitar_coordenadas(jugador):
         true o false
 """
 def disparar(x, y, matriz) -> bool:
+    #analizamos si es mar es decir esta o no vacia la posición
     if es_mar(x, y, matriz):
+        #asignamos la posicion de la matriz a Disparo Fallido
         matriz[y][x] = DISPARO_FALLADO
+        #retornamos falso
         return False
     # Si ya había disparado antes, se le cuenta como falla igualmente
     elif matriz[y][x] == DISPARO_FALLADO or matriz[y][x] == DISPARO_ACERTADO:
+        #retornamos falso
         return False
+    #si no
     else:
+        #asignamos a la posicion de la matriz disparo acertado
         matriz[y][x] = DISPARO_ACERTADO
+        #retorna verdadero
         return True
-
-"""
-    esta funcion nos retorna que jugador es el que esta jugando
-    Parametros:
-    ------------
-    jugador
-    Retorna:
-    ------------
-        Jugador
-"""
-def oponente_de_jugador(jugador):
-    if jugador == JUGADOR_1:
-        return JUGADOR_2
-    else:
-        return JUGADOR_1
 
 """
     esta funcion nos dice si es que todos los barcos de un jugador han sido hundidos
@@ -427,15 +408,6 @@ def todos_los_barcos_hundidos(matriz):
     # Acabamos de recorrer toda la matriz y no regresamos en la línea anterior. Entonces todos los barcos han sido hundidos
     return True
 
-#imprimir la victoria de un jugador
-def indicar_victoria(jugador):
-    print(f"Fin del juego\nEl jugador {jugador} es el ganador")
-
-#imprimir la derrota de un jugador
-def indicar_fracaso(jugador):
-    print(
-        f"Fin del juego\nEl jugador {jugador} pierde. Se han acabado sus disparos")
-
 """
     Esta funcion nos permite imprimir la matriz con los espacios ocupados por barcos o vacios
     Parametros:
@@ -445,10 +417,9 @@ def indicar_fracaso(jugador):
     ------------
         True o False
 """
-def imprimir_matrices_con_barcos(matriz_j1, matriz_j2):
-    print("Mostrando ubicación de los barcos de ambos jugadores:")
-    imprimir_matriz(matriz_j1, True, JUGADOR_1)
-    imprimir_matriz(matriz_j2, True, JUGADOR_2)
+def imprimir_matrices_con_barcos(matriz):
+    print("Mostrando ubicación de los barcos:")
+    imprimir_matriz(matriz, True)
 
 """
     En esta funcion usamos todas las funciones que hemos creado arriba para poder realizar la jugabilidad y la impresion de las matrices de cada jugador.
@@ -460,66 +431,80 @@ def imprimir_matrices_con_barcos(matriz_j1, matriz_j2):
         No retorna
 """
 def jugar():
-    disparos_restantes_j1 = DISPAROS_INICIALES
-    disparos_restantes_j2 = DISPAROS_INICIALES
+    #Definimos a los disparos restantes como los inciales que definimos al incio
+    disparos_restantes = DISPAROS_INICIALES
+    #Ingresamos la cantidad de barcos que se ingresaran en las celdas de la matriz creada
     cantidad_barcos = 5
-    matriz_j1, matriz_j2 = obtener_matriz_inicial(), obtener_matriz_inicial()
-    matriz_j1 = colocar_e_imprimir_barcos(matriz_j1, cantidad_barcos, JUGADOR_1)
-    matriz_j2 = colocar_e_imprimir_barcos(matriz_j2, cantidad_barcos, JUGADOR_2)
-    turno_actual = JUGADOR_1
+    #Hacemos al llamado a obtener matriz para crear una matriz vacia con las condiciones establecidas
+    matriz = obtener_matriz_inicial()
+    print("\n\n") 
+    #hacemos el llamado a la funcion que ingresara los barcos en posiciones aleatorias de la matriz, enviamos la matriz y la cantidad de barcos
+    matriz = colocar_e_imprimir_barcos(matriz, cantidad_barcos)
     print("===============")
+    #mientras sea verdadero
     while True:
-        print(f"Turno de {turno_actual}")
-        disparos_restantes = disparos_restantes_j2
-        if turno_actual == JUGADOR_1:
-            disparos_restantes = disparos_restantes_j1
-        imprimir_disparos_restantes(disparos_restantes, turno_actual)
-        matriz_oponente = matriz_j1
-        if turno_actual == JUGADOR_1:
-            matriz_oponente = matriz_j2
-        imprimir_matriz(matriz_oponente, False,
-                        oponente_de_jugador(turno_actual))
-        x, y = solicitar_coordenadas(turno_actual)
-        acertado = disparar(x, y, matriz_oponente)
-        if turno_actual == JUGADOR_1:
-            disparos_restantes_j1 -= 1
-        else:
-            disparos_restantes_j2 -= 1
-
-        imprimir_matriz(matriz_oponente, False,
-                        oponente_de_jugador(turno_actual))
+        #Asignamos a la matriz con barcos una nueva variable llamada matriz del jugaro ya que en esta no se donde estan los barcos
+        matriz_jugador = matriz
+        #Imprimimos los disparos restantes en este caso empezara con el numero de disparos inicales que asignemos.
+        print(f"Disparos restantes: {disparos_restantes}")
+        #Imprimos la matriz ques se imprimira sin barcosa ya que la funcion matriz si se envia un falso este entiende que no debe mostrar los barcos
+        imprimir_matriz(matriz_jugador, False)
+        #salto de linea
+        print("\n\n") 
+        #solicitamos las coordenas con la funcion antes creada y ademas los asignamos a las variables x, y
+        x, y = solicitar_coordenadas()
+        #Usamos una varibable acertado para asignar el valor de verdad de la funcino disparar a la cual enviamos las coordenadas x, y y la matriz del jugador
+        acertado = disparar(x, y, matriz_jugador)
+        #si acertado es verdadero
         if acertado:
+            #se imprime disparo acertado
             print("Disparo acertado")
-            if todos_los_barcos_hundidos(matriz_oponente):
-                indicar_victoria(turno_actual)
-                imprimir_matrices_con_barcos(matriz_j1, matriz_j2)
+            #Si todos los barcos ya han sido hundidos
+            if todos_los_barcos_hundidos(matriz_jugador):
+                #salto de linea
+                print("\n\n") 
+                #Se indica que es fin del juego y el jugador ha ganado
+                print(f"Fin del juego\nEl jugador es el ganador")
+                #se imprime las matrices con los barcos
+                imprimir_matrices_con_barcos(matriz)
+                #se rompe el while
                 break
+        #si acertado es falso
         else:
+            #se imprime disparo fallido
             print("Disparo fallado")
+            #Se resta un disparo
+            disparos_restantes -= 1
+            #Se verifica si los disparos restantes son menores o iguales a cero
             if disparos_restantes-1 <= 0:
-                indicar_fracaso(turno_actual)
-                imprimir_matrices_con_barcos(matriz_j1, matriz_j2)
+                #salto de linea
+                print("\n\n") 
+                #Se indica el fin del juego y que ha perdido porque se le acabaron los turnos
+                print(f"Fin del juego\nEl jugador pierde. Se han acabado sus disparos")
+                #se imprime la matriz con los barcos
+                imprimir_matrices_con_barcos(matriz)
+                #se rompe los while
                 break
-            turno_actual = oponente_de_jugador(turno_actual)
-"""
-    nos muestra un pequeño menu de opciones
-    Parametros:
-    ------------
-        No tiene
-    Retorna:
-    ------------
-        No retorna
-"""
+
+
+#Funcion menu para hacer el llamado las funciones jugar o salir
 def mostrar_menu():
-    eleccion = ""
-    while eleccion != "3":
+    #Generamos una variable para almacenar la opcion
+    opcion = ""
+    #mientras la opcion sea diferente de 2
+    while opcion != "2":
+        #menu se ejcutara
         menu = """
-1. Jugar
-3. Salir
-Elige: """
-        eleccion = input(menu)
-        if eleccion == "1":
+            1. Jugar
+            2. Salir
+            Elige: """
+        #opcion es igual a la entrada que debemos a menu
+        opcion = input(menu)
+        #si la opcion es 1
+        if opcion == "1":
             #llamammos a la funcion jugar
             jugar()
-#llamamos ala funcion menu ¿
+        #sino saldra del menu y finalizara todo
+
+#llamamos ala funcion menu para inciar el juego.
 mostrar_menu()
