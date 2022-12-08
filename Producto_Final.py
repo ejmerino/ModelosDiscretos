@@ -39,7 +39,9 @@ DISPAROS_INICIALES = 10
 #Canrtidad de barcos a usar para los dos jugadores
 CANTIDAD_BARCOS_INICIALES = 8   
 
-"""
+
+def obtener_matriz_inicial():
+    """
     Es una funcion para generar la matriz inicial donde se alojaran los barcos en diferentes posiciones
     Parametros:
     ------------
@@ -48,8 +50,7 @@ CANTIDAD_BARCOS_INICIALES = 8
     Retorna:
     ------------
         Retorna una matriz
-"""
-def obtener_matriz_inicial():
+    """
     #Declaramos un arreglo con nombre matriz
     matriz = []
     #comparamos para un y en un rango tomado el valor de Filas definido antes.
@@ -61,7 +62,9 @@ def obtener_matriz_inicial():
             matriz[y].append(MAR)
             #retornamos la matriz
     return matriz
-"""
+
+def incrementar_letra(letra):
+    """
     Nos funciona como un contadora para cambiar o aumentar la posicion en la que nos encontremos con una letra A, B, C, D, E. Retorna una letra despues de la que se ingreso es decir si ingresa la A entonces retornara B
     Parametros:
     ------------
@@ -70,11 +73,12 @@ def obtener_matriz_inicial():
     Retorna:
     ------------
         retorna una letra despues de la que se ingreso
-"""
-def incrementar_letra(letra):
+    """
     return chr(ord(letra)+1)
 
-"""
+
+def imprimir_separador_horizontal():
+    """
     Imprimir un renglón dependiendo de las columnas para una mejor vista de la matriz
     Parametros:
     ------------
@@ -83,14 +87,15 @@ def incrementar_letra(letra):
     Retorna:
     ------------
         No retorna nada
-"""
-def imprimir_separador_horizontal():
+    """
     #vamos imprimiendo los renglones para imprimir la matriz de mejor manera
     for _ in range(COLUMNAS+1):
         print("+---", end="")
     print("+")
 
-"""
+
+def imprimir_fila_de_numeros():
+    """
     Imprimir la fila de numeros y los separadores verticales
     Parametros:
     ------------
@@ -99,14 +104,15 @@ def imprimir_separador_horizontal():
     Retorna:
     ------------
         No retorna nada
-"""
-def imprimir_fila_de_numeros():
+    """
     print("|   ", end="")
     for x in range(COLUMNAS):
         print(f"| {x+1} ", end="")
     print("|")
 
-"""
+
+def es_mar(x, y, matriz):
+    """
     Indica si una coordenada de la matriz está vacía o no
     Parametros:
     ------------
@@ -117,12 +123,12 @@ def imprimir_fila_de_numeros():
     Retorna:
     ------------
         Retorna MAR si esta vacia o no.
-"""
-def es_mar(x, y, matriz):
+    """
     #retorna si la coordenada esta vacia
     return matriz[y][x] == MAR
 
-"""
+def coordenada_en_rango(x, y):
+    """
     Indica si las coordenadas estan en el rango del tablero
     Parametros:
     ------------
@@ -132,11 +138,11 @@ def es_mar(x, y, matriz):
     Retorna:
     ------------
         Retorna las coordenadas "x" y "y" 
-"""
-def coordenada_en_rango(x, y):
+    """
     return x >= 0 and x <= COLUMNAS-1 and y >= 0 and y <= FILAS-1
 
-"""
+def colocar_e_imprimir_barcos(matriz, cantidad_barcos):
+    """
     Asigna los barcos a las posiciones y los imprime.
     Parametros:
     ------------
@@ -147,8 +153,7 @@ def coordenada_en_rango(x, y):
     Retorna:
     ------------
         Retorna la matriz
-"""
-def colocar_e_imprimir_barcos(matriz, cantidad_barcos):
+    """
     # Dividimos y redondeamos a entero hacia abajo (ya que no podemos colocar una parte no entera de un barco)
     barcos_una_celda = cantidad_barcos//2
     barcos_dos_celdas_verticales = cantidad_barcos//4
@@ -162,7 +167,8 @@ def colocar_e_imprimir_barcos(matriz, cantidad_barcos):
     matriz = colocar_barcos_de_una_celda(barcos_una_celda, SUBMARINO, matriz)
     return matriz
 
-"""
+def obtener_x_aleatoria():
+    """
     Obtenemos una coordenada x aleatoria
     Parametros:
     ------------
@@ -171,11 +177,11 @@ def colocar_e_imprimir_barcos(matriz, cantidad_barcos):
     Retorna:
     ------------
         Retorna la coordenada en X aleatoria
-"""
-def obtener_x_aleatoria():
+    """
     return random.randint(0, COLUMNAS-1)
 
-"""
+def obtener_y_aleatoria():
+    """
     Obtenemos una coordenada y aleatoria
     Parametros:
     ------------
@@ -184,11 +190,12 @@ def obtener_x_aleatoria():
     Retorna:
     ------------
         Retorna la coordenada en y aleatoria
-"""
-def obtener_y_aleatoria():
+    """
     return random.randint(0, FILAS-1)
 
-"""
+
+def colocar_barcos_de_una_celda(cantidad, tipo_barco, matriz):
+    """
     ES una funcion que coloca los barcos que solo ocupan una celda
     Parametros:
     ------------
@@ -199,8 +206,7 @@ def obtener_y_aleatoria():
     Retorna:
     ------------
         Retorna la matriz llena
-"""
-def colocar_barcos_de_una_celda(cantidad, tipo_barco, matriz):
+    """
     #Definimos la variable de barcos colocados
     barcos_colocados = 0
     while True:
@@ -219,7 +225,8 @@ def colocar_barcos_de_una_celda(cantidad, tipo_barco, matriz):
     #retornamos la matriz
     return matriz
 
-"""
+def colocar_barcos_de_dos_celdas_horizontal(cantidad, tipo_barco, matriz):
+    """
     ES una funcion que coloca los barcos que ocupan dos celdas horizontales analizando si la celda esta llena o no y si esta en el rango
     Parametros:
     ------------
@@ -230,8 +237,7 @@ def colocar_barcos_de_una_celda(cantidad, tipo_barco, matriz):
     Retorna:
     ------------
         Retorna la matriz llena
-"""
-def colocar_barcos_de_dos_celdas_horizontal(cantidad, tipo_barco, matriz):
+    """
     #Definimos la variable de barcos colocados
     barcos_colocados = 0
     while True:
@@ -253,7 +259,8 @@ def colocar_barcos_de_dos_celdas_horizontal(cantidad, tipo_barco, matriz):
         #retorna la matriz llena.
     return matriz
 
-"""
+def colocar_barcos_de_dos_celdas_vertical(cantidad, tipo_barco, matriz):
+    """
     ES una funcion que coloca los barcos que ocupan dos celdas verticales analizando si la celda esta llena o no y si esta en el rango
     Parametros:
     ------------
@@ -264,8 +271,7 @@ def colocar_barcos_de_dos_celdas_horizontal(cantidad, tipo_barco, matriz):
     Retorna:
     ------------
         Retorna la matriz llena
-"""
-def colocar_barcos_de_dos_celdas_vertical(cantidad, tipo_barco, matriz):
+    """
     #Definimos la variable de barcos colocados
     barcos_colocados = 0
     while True:
@@ -286,7 +292,8 @@ def colocar_barcos_de_dos_celdas_vertical(cantidad, tipo_barco, matriz):
     #retorna la matriz llena.
     return matriz
 
-"""
+def imprimir_matriz(matriz, deberia_mostrar_barcos):
+    """
     ES una funcion que nos imprime la celda de cada jugador para visibilizar mejor
     Parametros:
     ------------
@@ -295,8 +302,7 @@ def colocar_barcos_de_dos_celdas_vertical(cantidad, tipo_barco, matriz):
     Retorna:
     ------------
         No retorna
-"""
-def imprimir_matriz(matriz, deberia_mostrar_barcos):
+    """
     #variable para imprimir el tablero
     letra = "A"
     #para un y en el rango del numero de filas
@@ -317,7 +323,8 @@ def imprimir_matriz(matriz, deberia_mostrar_barcos):
     imprimir_fila_de_numeros()
     imprimir_separador_horizontal()
 
-"""
+def solicitar_coordenadas():
+    """
     ES una funcion que nos pide que ingresen las coordenadas, ademas que valida si las coordenadas ingresadas estan dentro del rango de opciones 
     Parametros:
     ------------
@@ -326,8 +333,7 @@ def imprimir_matriz(matriz, deberia_mostrar_barcos):
     ------------
         la coordenada en x
         la coordenada en y
-"""
-def solicitar_coordenadas():
+    """
     print(f"Solicitando coordenadas de disparo al jugador")
     # Ciclo infinito. Se rompe cuando ingresan una fila correcta
     y = None
@@ -366,7 +372,8 @@ def solicitar_coordenadas():
     #retorna las variables x y y
     return x, y
 
-"""
+def disparar(x, y, matriz) -> bool:
+    """
     ES una funcion que nos permite disparar o si el disaparo es acertado o fallido comprobando si la celda escogida esta o no vacia.
     Parametros:
     ------------
@@ -376,8 +383,7 @@ def solicitar_coordenadas():
     Retorna:
     ------------
         true o false
-"""
-def disparar(x, y, matriz) -> bool:
+    """
     #analizamos si es mar es decir esta o no vacia la posición
     if es_mar(x, y, matriz):
         #asignamos la posicion de la matriz a Disparo Fallido
@@ -395,7 +401,8 @@ def disparar(x, y, matriz) -> bool:
         #retorna verdadero
         return True
 
-"""
+def todos_los_barcos_hundidos(matriz):    
+    """
     esta funcion nos dice si es que todos los barcos de un jugador han sido hundidos
     Parametros:
     ------------
@@ -403,8 +410,7 @@ def disparar(x, y, matriz) -> bool:
     Retorna:
     ------------
         True o False
-"""
-def todos_los_barcos_hundidos(matriz):
+    """
     for y in range(FILAS):
         for x in range(COLUMNAS):
             celda = matriz[y][x]
@@ -414,7 +420,8 @@ def todos_los_barcos_hundidos(matriz):
     # Acabamos de recorrer toda la matriz y no regresamos en la línea anterior. Entonces todos los barcos han sido hundidos
     return True
 
-"""
+def imprimir_matrices_con_barcos(matriz):
+    """
     Esta funcion nos permite imprimir la matriz con los espacios ocupados por barcos o vacios
     Parametros:
     ------------
@@ -422,12 +429,12 @@ def todos_los_barcos_hundidos(matriz):
     Retorna:
     ------------
         True o False
-"""
-def imprimir_matrices_con_barcos(matriz):
+    """
     print("Mostrando ubicación de los barcos:")
     imprimir_matriz(matriz, True)
 
-"""
+def jugar():
+    """
     En esta funcion usamos todas las funciones que hemos creado arriba para poder realizar la jugabilidad y la impresion de las matrices de cada jugador.
     Parametros:
     ------------
@@ -435,8 +442,7 @@ def imprimir_matrices_con_barcos(matriz):
     Retorna:
     ------------
         No retorna
-"""
-def jugar():
+    """
     #Definimos a los disparos restantes como los inciales que definimos al incio
     disparos_restantes = DISPAROS_INICIALES
     #Ingresamos la cantidad de barcos que se ingresaran en las celdas de la matriz creada
@@ -491,10 +497,6 @@ def jugar():
                 imprimir_matrices_con_barcos(matriz)
                 #se rompe los while
                 break
-
-
-
-
 
 """
 Torres de Equilibrio
@@ -766,7 +768,7 @@ def mostrar_menu():
     while opcion != "4":
         #menu se ejcutara
         menu = """
-        Bienvenido al Proyecto
+        MASECK le da la más coordial bienvenida.
             1. Batalla Naval
             2. Torre de equilibrio
             3. Problema 8 reinas
