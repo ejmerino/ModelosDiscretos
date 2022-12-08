@@ -617,11 +617,14 @@ def Imprimir(Lista):
     os.system("cls")
 
 def bienvenida():
-        """ Determina si la casilla fila x columna está libre de amenazas.
-        @param nombre: Nombre
-        @param apellido: Apellido
-        @return: Anuncio dando la bienvenida a la persona
-        """ 
+        """
+        Se le da la bienvenida al usuario pidiendole su nombre y su apellido
+        ------------
+        nombre y apellido
+        
+        ------------
+        Anuncio dando la bienvenida a la persona
+        """               
         #Le pide al usuario que ingrese su nombre
         nombre = input("Ingrese su nombre: ")
         #Le pide al usuario que ingrese su apellido
@@ -632,12 +635,15 @@ def bienvenida():
         print(f"La solución al problema de las Ocho Reinas es la siguiente: ")
 
 def free(fila, columna):
-        """ Determina si la casilla fila x columna está libre de amenazas.
-        @param r: Fila
-        @param c: columna
-        @return: True si la casilla está libre de amenazas por otras reinas.
-        """        
-        
+        """
+        Determina si la casilla fila x columna está libre de amenazas.
+        ------------
+        r: Fila
+        c: Columna
+        Retorna:
+        ------------
+        True si la casilla está libre de amenazas por otras reinas.
+        """               
         #Se asigna una variable auxiliar i
         #Para la variable auxiliar i, dentro del rango de ocho
         for i in range(8):
@@ -701,9 +707,15 @@ def free(fila, columna):
         return True
 
 def agregar_reina(n):
-        """ Agrega n reinas al tablero.
-        @param: n Reinas a Agregar
-        @return True si es que ninguna reina se amenaza entre sí
+        """
+        Agrega las reinas dentro del tablero de ajedrez.
+        Parametros:
+        ------------
+        n reinas a agregar
+    
+        Retorna:
+        ------------
+        No retorna nada
         """
         #Si es que el número de reinas es menor que 1
         if n < 1:
@@ -739,17 +751,27 @@ for i in range(8):
 
 #Funcion menu para hacer el llamado las funciones jugar o salir
 def mostrar_menu():
+    """
+    Llama a la función menú para elegir el juego o salir
+    ------------
+    El parámetro es la opción a elegir
+    
+    Retorna:
+    ------------
+    Retorna el juego elegido
+    """
     #Generamos una variable para almacenar la opcion
     opcion = ""
     #mientras la opcion sea diferente de 2
     while opcion != "4":
         #menu se ejcutara
         menu = """
+        Bienvenido al Proyecto
             1. Batalla Naval
             2. Torre de equilibrio
             3. Problema 8 reinas
             4. Salir
-            Elige: """
+            Elija su opción: """
         #opcion es igual a la entrada que debemos a menu
         opcion = input(menu)
         #si la opcion es 1
@@ -768,5 +790,5 @@ def mostrar_menu():
                 #Se imprime la solución
                     print(*fila)
 
-#llamamos ala funcion menu para inciar el juego.
+#llamamos a la funcion menu para inciar el juego.
 mostrar_menu()
